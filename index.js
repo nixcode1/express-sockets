@@ -14,15 +14,16 @@ app.get("/", (req, res) => {
 io.on("connection", (socket) => {
   num++;
   console.log(`${num} users are connected"`);
-  io.emit("chat message", "User connected!");
+  console.log(`${socket.id} connected!`);
+  // io.emit("chat message", `${socket.id} connected!`);
   socket.on("chat message", (msg) => {
     io.emit("chat message", msg);
   });
   socket.on("disconnect", () => {
     num--;
-    console.log("user disconnected");
-    console.log(`${num} users are connected"`);
-    io.emit("chat message", "User disconnected!");
+    console.log(`${socket.id} disconnected!`);
+    console.log(`${num} users are connected`);
+    io.emit("chat message", `${socket.id} disconnected!`);
   });
 });
 
